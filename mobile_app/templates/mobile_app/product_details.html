@@ -1,0 +1,71 @@
+{% extends 'mobile_app/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-3">
+    <h3 class="display-3 text-center text-primary my-5">product '{{ current_product.product_name }}'</h3>
+    {% if db_order_objects|length > 0 %}
+    <div class="border p-3 my-5 nice-shadow border-muted rounded">
+    <h3 class="my-3 border-bottom pb-2">order [{{ db_order_objects|length }}]</h3>
+        <div class="table-responsive-md text-center">
+           <table class="table table-bordered text-center">
+              <thead class="thead-dark ">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">order_num</th>
+                  <th scope="col">order_cost</th>
+                  <th scope="col">order_date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in db_order_objects %}
+                    <tr>
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td><a href="{% url 'mobile_app:order-details' order.order_number.order_num %}" style="text-transform: none;">{{ order.order_number.order_num }}</a></td>
+                      <td>{{ order.order_number.order_cost }}</td>
+                      <td>{{ order.order_number.order_date }}</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+        <div class="alert alert-warning m-0" role="alert">no order yet</div>
+    {% endif %}
+    {% if db_supplier_objects|length > 0 %}
+    <div class="border p-3 my-5 nice-shadow border-muted rounded">
+        <h3 class="my-3 border-bottom pb-2">supplier [{{ db_supplier_objects|length }}]</h3>
+        <div class="table-responsive-md text-center">
+            <table class="table table-bordered">
+              <thead class="thead-dark ">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">supplier_number</th>
+                  <th scope="col">supplier_name</th>
+                  <th scope="col">address</th>
+                  <th scope="col">email</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for supply in db_supplier_objects %}
+                    <tr>
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td><a href="{% url 'mobile_app:supplier-details' supply.supplier_number.supplier_number %}">{{ supply.supplier_number.supplier_number }}</a></td>
+                      <td><a href="{% url 'mobile_app:supplier-details' supply.supplier_number.supplier_number %}">{{ supply.supplier_number.supplier_name }}</a></td>
+                      <td>{{ supply.supplier_number.address }}</td>
+                      <td>{{ supply.supplier_number.email }}</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+        <div class="alert alert-warning mt-5" role="alert">no supplier yet</div>
+    {% endif %}
+    {% if db_order_objects|length >= 10 %}
+        {% include "mobile_app/_pagination.html" with page=db_order_objects %}
+    {% endif %}
+    </div>
+{% endblock content %}

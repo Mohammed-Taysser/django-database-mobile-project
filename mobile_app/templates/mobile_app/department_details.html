@@ -1,0 +1,36 @@
+{% extends 'mobile_app/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-3">
+    <h3 class="display-2 text-center text-primary my-5">department '{{ current_department.department_name }}'</h3>
+        <div class="table-responsive-md text-center">
+                       <table class="table table-bordered text-center">
+              <thead class="thead-dark ">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">ssn</th>
+                  <th scope="col">fname</th>
+                  <th scope="col">lname</th>
+                  <th scope="col">email</th>
+                  <th scope="col">salary</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for emp in db_employee_objects %}
+                    <tr>
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td><a href="{% url 'mobile_app:employee-details' emp.ssn %}" style="text-transform: none;">{{ emp.ssn }}</a></td>
+                      <td>{{ emp.fname }}</td>
+                      <td>{{ emp.lname }}</td>
+                      <td>{{ emp.email }}</td>
+                      <td>{{ emp.salary }}</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+
+    {% include "mobile_app/_pagination.html" with page=db_employee_objects %}
+    </div>
+{% endblock content %}

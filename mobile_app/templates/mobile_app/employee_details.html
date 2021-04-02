@@ -1,0 +1,53 @@
+{% extends 'mobile_app/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-3">
+    <div class="border p-3 my-5 nice-shadow border-muted rounded">
+        <h3 class="mb-3 border-bottom pb-2">name: {{ current_employee.fname }} {{ current_employee.lname }}</h3>
+        <p class="mb-1 d-flex justify-content-between w-50"><strong>ssn</strong><span class="text-left"> {{ current_employee.ssn }}</span></p>
+        <p class="mb-1 d-flex justify-content-between w-50"><strong>email</strong><span class="text-left"> {{ current_employee.email }}</span></p>
+        <p class="mb-1 d-flex justify-content-between w-50"><strong>address</strong><span class="text-left"> {{ current_employee.address }}</span></p>
+        <p class="mb-1 d-flex justify-content-between w-50"><strong>birthdate</strong><span class="text-left"> {{ current_employee.birthdate }}</span></p>
+        <p class="mb-1 d-flex justify-content-between w-50"><strong>gender</strong><span class="text-left"> {% if current_employee.gender == 'f' %}female {% else %}male{% endif %}</span></p>
+        <p class="mb-1 d-flex justify-content-between w-50"><strong>salary</strong><span class="text-left"> {{ current_employee.salary }}</span></p>
+        <p class="mb-1 d-flex justify-content-between w-50"><strong>department_num</strong><span class="text-left"> {{ current_employee.dno.department_num }}</span></p>
+        <p class="mb-1 d-flex justify-content-between w-50"><strong>department_name</strong><a href="{% url 'mobile_app:department-details' current_employee.dno.department_num %}" class="text-left"> {{ current_employee.dno.department_name }}</a></p>
+        <p class="mb-1 d-flex justify-content-between w-50"><strong>manager ssn</strong> <a href="{% url 'mobile_app:employee-details' current_employee.dno.manager_ssn %}" class="text-left">{{ current_employee.dno.manager_ssn }}</a></p>
+    </div>
+    <div class="border p-3 my-5 nice-shadow border-muted rounded">
+        <h3 class="my-3 border-bottom pb-2">orders [{{ db_order_objects|length }}]</h3>
+        {% if db_order_objects|length > 0 %}
+            <div class="table-responsive-md">
+                <table class="table table-bordered text-center">
+                  <thead class="thead-dark ">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">order_num</th>
+                      <th scope="col">order_cost</th>
+                      <th scope="col">order_date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for order in db_order_objects %}
+                        <tr>
+                          <th scope="row">{{ forloop.counter }}</th>
+                          <td><a href="{% url 'mobile_app:order-details' order.order_number.order_num %}">{{ order.order_number.order_num }}</a></td>
+                          <td>{{ order.order_number.order_cost }}</td>
+                          <td>{{ order.order_number.order_date }}</td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-warning m-0" role="alert">no order yet</div>
+        {% endif %}
+    </div>
+
+    {% if db_order_objects|length >= 10 %}
+        {% include "mobile_app/_pagination.html" with page=db_order_objects %}
+    {% endif %}
+
+    </div>
+{% endblock content %}

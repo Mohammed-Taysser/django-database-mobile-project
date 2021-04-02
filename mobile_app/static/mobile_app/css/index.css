@@ -1,0 +1,8 @@
+body{
+    text-transform: capitalize;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.nice-shadow {
+    box-shadow: 0 3px 15px rgba(22, 41, 124, 0.1);
+  }

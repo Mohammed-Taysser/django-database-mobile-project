@@ -1,0 +1,34 @@
+{% extends 'mobile_app/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-3">
+    <h3 class="display-2 text-center text-primary my-5">products</h3>
+        <div class="table-responsive-md text-center">
+            <table class="table table-bordered">
+              <thead class="thead-dark ">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">product_number</th>
+                  <th scope="col">product_name</th>
+                  <th scope="col">price</th>
+                  <th scope="col">release_year</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for product in db_product_objects %}
+                    <tr>
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td><a href="{% url 'mobile_app:product-details' product.product_number %}">{{ product.product_number }}</a></td>
+                      <td>{{ product.product_name }}</td>
+                      <td>{{ product.price }}</td>
+                      <td>{{ product.release_year }}</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+
+    {% include "mobile_app/_pagination.html" with page=db_product_objects %}
+    </div>
+{% endblock content %}

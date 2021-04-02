@@ -1,0 +1,34 @@
+{% extends 'mobile_app/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-3">
+    <h3 class="display-2 text-center text-primary my-5">department location</h3>
+        <div class="table-responsive-md">
+            <table class="table table-bordered text-center">
+              <thead class="thead-dark ">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">department_num</th>
+                  <th scope="col">department_name</th>
+                  <th scope="col">department_location</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for dep in db_department_objects %}
+                    <tr>
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td><a href="{% url 'mobile_app:department-details' dep.department_num.department_num %}">{{ dep.department_num.department_num }}</a></td>
+                      <td><a href="{% url 'mobile_app:department-details' dep.department_num.department_num %}">{{ dep.department_num.department_name }}</a></td>
+                      <td>{{ dep.department_location }}</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+
+    {% if db_order_objects|length >= 10 %}
+        {% include "mobile_app/_pagination.html" with page=db_department_objects %}
+    {% endif %}
+    </div>
+{% endblock content %}

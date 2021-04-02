@@ -1,0 +1,34 @@
+{% extends 'mobile_app/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-3">
+    <h3 class="display-2 text-center text-primary my-5">discounts</h3>
+        <div class="table-responsive-md text-center">
+            <table class="table table-bordered">
+              <thead class="thead-dark ">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">discount_num</th>
+                  <th scope="col">discount_value</th>
+                  <th scope="col">end_date</th>
+                  <th scope="col">start_date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for dis in db_discount_objects %}
+                    <tr>
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td>{{ dis.discount_num }}</td>
+                      <td>{{ dis.discount_value }}</td>
+                      <td>{{ dis.end_date }}</td>
+                      <td>{{ dis.start_date }}</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+
+    {% include "mobile_app/_pagination.html" with page=db_discount_objects %}
+    </div>
+{% endblock content %}

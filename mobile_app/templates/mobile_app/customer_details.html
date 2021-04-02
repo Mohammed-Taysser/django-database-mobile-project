@@ -1,0 +1,78 @@
+{% extends 'mobile_app/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-3">
+    <div class="border p-3 my-5 nice-shadow border-muted rounded">
+        <h3 class="mb-3 border-bottom pb-2">name: {{ current_customer.fname }} {{ current_customer.lname }}</h3>
+        <p class="mb-1 d-flex justify-content-between w-50"><strong>ssn</strong> {{ current_customer.ssn }}</p>
+        <p class="mb-1 d-flex justify-content-between w-50"><strong>email</strong> {{ current_customer.email }}</p>
+        <p class="mb-1 d-flex justify-content-between w-50"><strong>address</strong> {{ current_customer.address }}</p>
+    </div>
+    <div class="border p-3 my-5 nice-shadow border-muted rounded">
+        <h3 class="my-3 border-bottom pb-2">discounts [{{ db_discount_objects|length }}]</h3>
+        {% if db_discount_objects|length > 0 %}
+            <div class="table-responsive-md">
+                <table class="table table-bordered text-center">
+                  <thead class="thead-dark ">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">discount_num</th>
+                      <th scope="col">discount_value</th>
+                      <th scope="col">start_date</th>
+                        <th scope="col">end_date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for dis in db_discount_objects %}
+                        <tr>
+                          <th scope="row">{{ forloop.counter }}</th>
+                          <td>{{ dis.discount_num.discount_num }}</td>
+                          <td>{{ dis.discount_num.discount_value }}</td>
+                          <td>{{ dis.discount_num.start_date }}</td>
+                        <td>{{ dis.discount_num.end_date }}</td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-warning m-0" role="alert">no discount yet</div>
+        {% endif %}
+    </div>
+    <div class="border p-3 my-5 nice-shadow border-muted rounded">
+        <h3 class="my-3 border-bottom pb-2">orders [{{ db_order_objects|length }}]</h3>
+        {% if db_order_objects|length > 0 %}
+            <div class="table-responsive-md">
+                <table class="table table-bordered text-center">
+                  <thead class="thead-dark ">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">order_num</th>
+                      <th scope="col">order_cost</th>
+                      <th scope="col">order_date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for order in db_order_objects %}
+                        <tr>
+                          <th scope="row">{{ forloop.counter }}</th>
+                          <td><a href="{% url 'mobile_app:order-details' order.order_num.order_num %}">{{ order.order_num.order_num }}</a></td>
+                          <td>{{ order.order_num.order_cost }}</td>
+                          <td>{{ order.order_num.order_date }}</td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-warning m-0" role="alert">no order yet</div>
+        {% endif %}
+    </div>
+
+    {% if db_order_objects|length >= 10 %}
+        {% include "mobile_app/_pagination.html" with page=db_order_objects %}
+    {% endif %}
+
+    </div>
+{% endblock content %}

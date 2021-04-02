@@ -1,0 +1,36 @@
+{% extends 'mobile_app/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-3">
+    <h3 class="display-2 text-center text-primary my-5">customer</h3>
+        <div class="table-responsive-md">
+            <table class="table table-bordered">
+              <thead class="thead-dark text-center">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">ssn</th>
+                  <th scope="col">fname</th>
+                  <th scope="col">lname</th>
+                  <th scope="col">email</th>
+                  <th scope="col">address</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for customer in db_customer_objects %}
+                    <tr>
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td><a href="{% url 'mobile_app:customer-details' customer.ssn %}">{{ customer.ssn }}</a></td>
+                      <td>{{ customer.fname }}</td>
+                      <td>{{ customer.lname }}</td>
+                      <td>{{ customer.email }}</td>
+                      <td>{{ customer.address }}</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+
+    {% include "mobile_app/_pagination.html" with page=db_customer_objects %}
+    </div>
+{% endblock content %}

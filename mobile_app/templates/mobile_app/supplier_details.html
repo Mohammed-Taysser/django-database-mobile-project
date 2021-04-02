@@ -1,0 +1,69 @@
+{% extends 'mobile_app/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-3">
+    <h3 class="display-3 text-center text-primary my-5">supplier '{{ current_supplier.supplier_name }}'</h3>
+    {% if db_phone_objects|length > 0 %}
+    <div class="border p-3 my-5 nice-shadow border-muted rounded">
+    <h3 class="my-3 border-bottom pb-2">phone [{{ db_phone_objects|length }}]</h3>
+        <div class="table-responsive-md text-center">
+           <table class="table table-bordered text-center">
+              <thead class="thead-dark ">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">phone</th>
+                  <th scope="col">address</th>
+                  <th scope="col">email</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for phone in db_phone_objects %}
+                    <tr>
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td>{{ phone.phone }}</td>
+                      <td>{{ phone.supplier_number.address }}</td>
+                      <td>{{ phone.supplier_number.email }}</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+        <div class="alert alert-warning my-5" role="alert">no phone added yet</div>
+    {% endif %}
+    {% if db_product_objects|length > 0 %}
+        <h3 class="my-3 border-bottom pb-2">products [{{ db_product_objects|length }}]</h3>
+        <div class="table-responsive-md text-center">
+            <table class="table table-bordered">
+              <thead class="thead-dark ">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">product_number</th>
+                  <th scope="col">product_name</th>
+                  <th scope="col">price</th>
+                  <th scope="col">release_year</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for product in db_product_objects %}
+                    <tr>
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td><a href="{% url 'mobile_app:product-details' product.product_number.product_number %}">{{ product.product_number.product_number }}</a></td>
+                      <td><a href="{% url 'mobile_app:product-details' product.product_number.product_number %}">{{ product.product_number.product_name }}</a></td>
+                      <td>{{ product.product_number.price }}</td>
+                      <td>{{ product.product_number.release_year }}</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-warning m-0" role="alert">no product yet</div>
+    {% endif %}
+    {% if db_product_objects|length >= 10 %}
+        {% include "mobile_app/_pagination.html" with page=db_order_objects %}
+    {% endif %}
+    </div>
+{% endblock content %}

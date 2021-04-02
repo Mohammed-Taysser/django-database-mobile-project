@@ -1,0 +1,32 @@
+{% extends 'mobile_app/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-3">
+    <h3 class="display-2 text-center text-primary my-5">orders</h3>
+        <div class="table-responsive-md text-center">
+            <table class="table table-bordered">
+              <thead class="thead-dark ">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">order_num</th>
+                  <th scope="col">order_cost</th>
+                  <th scope="col">order_date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in db_order_objects %}
+                    <tr>
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td><a href="{% url 'mobile_app:order-details' order.order_num %}">{{ order.order_num }}</a></td>
+                      <td>{{ order.order_cost }}</td>
+                      <td>{{ order.order_date }}</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+
+    {% include "mobile_app/_pagination.html" with page=db_order_objects %}
+    </div>
+{% endblock content %}
