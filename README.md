@@ -7,7 +7,7 @@
 > install pip in window ``python get-pip.py``
 ## INSTALLATION
 ```markdown
-1. git clone https://github.com/chunkydonut21/Youtube-Downloader.git
+1. git clone https://github.com/Mohammed-Taysser/django-database-mobile-project.git
 2. cd Youtube-Downloader
 3. pip install -r requirements.txt
 4. python manage.py runsever
