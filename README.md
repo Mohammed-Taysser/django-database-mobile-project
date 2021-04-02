@@ -19,7 +19,18 @@
 
  the database name is `django_mobile_project` so use should change the user name and password to your own one
 
-you will find it on setting.py
+you will find it on `setting.py` in `mobile_project` folder
+
+```markdown
+django-database-mobile-project/
+    manage.py
+    mobile_project/
+        __init__.py
+        settings.py     <== here
+        urls.py
+        asgi.py
+        wsgi.py
+```
 ```python
 ....
 
