@@ -8,7 +8,7 @@
 ## INSTALLATION
 ```markdown
 1. git clone https://github.com/Mohammed-Taysser/django-database-mobile-project.git
-2. cd Youtube-Downloader
+2. cd django-database-mobile-project
 3. pip install -r requirements.txt
 4. python manage.py runsever
 
