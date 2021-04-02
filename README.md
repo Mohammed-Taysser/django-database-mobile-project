@@ -2,7 +2,7 @@
 ## REQUIREMENTS
 1. [python](https://www.python.org/downloads/)
 2. [pip](https://pypi.org/project/pip/) 
-3. postgres
+3. [postgres](https://www.postgresql.org/)
 
 
 > install pip in window ``python get-pip.py``
